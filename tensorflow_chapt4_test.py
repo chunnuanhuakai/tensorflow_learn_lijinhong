@@ -84,34 +84,12 @@ results_ordered_by_probability2 = map(lambda x: x[0], sorted(zip(clf.classes_, r
 
 
 
-
-def check_label_sample(str1, str2):
-    if str1 == str2:
-        return str1
-    else:
-        return str1+'/'+str2
-
-
-def test_norm(y_test, x_test):
-    x_test_str = []
-    
-    for index in range(len(y_test)):
-        x_test_str.append("||".join("%s" % s for s in x_test[index]))
-    
-    test_data = pd.DataFrame({"label":y_test, "sample":x_test_str})
-    data_drop_f = test_data.drop_duplicates(subset=['sample'], keep='first')
-    data_drop_l = test_data.drop_duplicates(subset=['sample'], keep='last')
-    data_drop_l.rename(columns={'label': 'label_2'},inplace=True)
-    
-    if len(data_drop_f['label'])==len(test_data['label']):
-        return 
-    else :
-        
-        data = pd.merge(data_drop_f, data_drop_l, how='left', on='sample')
-        
-    data['label_sum'] = data.apply(lambda row : check_label_sample(row['label'], row['label_2']),axis=1)
-    return data, test_data
-
+sess = tf.Session()
+print(sess.run(tf.random_normal([1])))
+print(sess.run(tf.random_normal([5])))
+print(sess.run(tf.random_normal(5)))
+print(sess.run(tf.random_normal([5,3])))
+sess.close()
 
 
 
