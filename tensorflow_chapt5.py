@@ -86,11 +86,13 @@ print('starting 2nd session-----')
 with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
 
-    model_file=tf.train.latest_checkpoint(savedir)
-    if model_file!=None:
-        saver.restore(sess,model_file)
-        
-#    saver.restore(sess, savedir)
+    #------------用到检查节点、方便后续迭代继续计算-----------------
+#    model_file=tf.train.latest_checkpoint(savedir)
+#    if model_file!=None:
+#        saver.restore(sess,model_file)
+
+   #------------读取保存的模型文件----------------------
+    saver.restore(sess, savedir)
    
         
     # calc  准确度
