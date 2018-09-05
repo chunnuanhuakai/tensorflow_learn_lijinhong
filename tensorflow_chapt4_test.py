@@ -89,7 +89,101 @@ print(sess.run(tf.random_normal([1])))
 print(sess.run(tf.random_normal([5])))
 print(sess.run(tf.random_normal(5)))
 print(sess.run(tf.random_normal([5,3])))
+
+
+tensor =[[1,2,3],[2,3,4]]
+print(sess.run(tf.random_normal(shape = [2,3])))
+print(sess.run(tf.random_uniform(shape = [2,3])))
+print(sess.run(tf.range(start=1, limit=10)))
+
+print(sess.run(tf.diag([1,2,3,4])))
+
+print(sess.run(tf.reduce_sum([[1,1,1], [1, 1, 1]], axis = 0, keep_dims=True)))
+print(sess.run(tf.reduce_min([[1,2,3], [2,3,4]], axis =0)))
+
+print(sess.run(tf.argmax([[10,2,3],[2,3,4]], axis=0)))
+print(sess.run(tf.setdiff1d([1,2,3],[2,3,3])))
+
+
+print(sess.run(tf.zeros([2])))
+
+
+
 sess.close()
+
+
+
+
+val1 = tf.Variable(1.0, name='firstvar')
+print("val1:", val1.name)
+
+val1 = tf.Variable(2.0, name='firstvar')
+print('val1:', val1.name)
+
+val2 = tf.Variable(3.0)
+print("val2:", val2.name)
+
+val2 = tf.Variable(4.0)
+print("val2:", val2.name)
+
+
+
+
+sess = tf.Session()
+with tf.Session() as sess:
+    sess.run(tf.global_variables_initializer())
+    print('val1=', val1.eval())
+    print('val2=', val2.eval())
+
+    
+tf.reset_default_graph()
+
+with tf.variable_Scope("scope1") as sp:
+    var1 = tf.get_variable("v", [1])
+    
+print('sp:', sp.name)
+print('var1', var1.name)
+
+with tf.variable_scope('scope2'):
+    var2 = tf.get_variable('v',[1])
+    with tf.variable_scope(sp) as sp1:
+        var3 = tf.get_variable('v3',[1])
+        
+print('sp1:', sp1.name)
+print('var2:', var2.name)
+print('var3:', var3.name)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
