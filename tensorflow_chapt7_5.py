@@ -77,9 +77,8 @@ Z = tf.matmul(input_feature, weight) + bias
 
 ##cost 
 preb = tf.nn.softmax_cross_entropy_with_logits(logits = Z, labels=input_label)
-optimizer = tf.train.AdamOptimizer(learning_rate=0.04).minimize(preb)
-
 loss = tf.reduce_mean(preb)
+optimizer = tf.train.AdamOptimizer(0.04).minimize(loss)
 ## count wrong sample nums
 
 Z_softmax = tf.nn.softmax(Z)
@@ -105,6 +104,41 @@ with tf.Session() as sess:
 
             
             summerr = summerr +  err2/minibatchSize
-            print('epoch:',epoch, 'loss:',loss2, "sumerr:",summerr)   
-        
+        print('epoch:',epoch, '\t','loss:',loss2,'\t', "sumerr:",summerr)   
+    train_x, train_y = X,Y
+    label_value = [np.argmax(l) for l in train_y]
+    
+    colors = ['r' if l==0 else 'b' if l==1 else 'y' for l in label_value]
+    plt.scatter(train_x[:, 0], train_x[:, 1], c=colors)
+    
+    x = np.linspace(-1, 8, 200)
+    y =( -x* sess.run(weight)[0][0] - sess.run(bias)[0])/sess.run(weight)[1][0]
+    plt.plot(x, y, label='first line')
+    
+    
+    y =( -x* sess.run(weight)[0][1] - sess.run(bias)[1])/sess.run(weight)[1][1]
+    plt.plot(x, y, label='second line')
+    
 
+    y =( -x* sess.run(weight)[0][2] - sess.run(bias)[2])/sess.run(weight)[1][2]
+    plt.plot(x, y, label='third line')
+    
+    plt.legend()
+    plt.show()
+    print(sess.run(weight), sess.run(bias))
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
