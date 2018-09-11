@@ -97,29 +97,14 @@ with tf.Session() as sess:
     
     for epoch in range(max_epoch):
         summerr = 0
-        for i in range(np.int32(len(input_label)/minibatchSize)):
+        for i in range(np.int32(len(Y)/minibatchSize)):
             x1 = X[i*minibatchSize:(i+1)*minibatchSize,:]
             y1 = Y[i*minibatchSize:(i+1)*minibatchSize,:]
             
-            _,loss, err = sess.run([optimizer, loss, err], 
-                                   feed_dict={input_feature:x1, input_label:y1})
+            _,loss2, err2 = sess.run([optimizer, loss, err], feed_dict={input_feature:x1, input_label:y1})
+
             
-            summerr = summerr +  err/minibatchSize
-        print('epoch:',epoch, 'loss:',loss, "sumerr:",summerr)   
+            summerr = summerr +  err2/minibatchSize
+            print('epoch:',epoch, 'loss:',loss2, "sumerr:",summerr)   
         
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
