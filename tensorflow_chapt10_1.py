@@ -8,7 +8,7 @@ import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
 from tensorflow.examples.tutorials.mnist import input_data
-mnist = input_data.read_data_sets('F:/DATA/mnist/',one_hot=True)
+mnist = input_data.read_data_sets('E:\liuhongbing\python\data\MNIST_data',one_hot=True)
 
 learning_rate = 0.01
 n_hidden_1 = 256
@@ -40,7 +40,7 @@ biases = {
 # 编码
 def encoder(x):
     
-    layer_1 = tf.nn.sigmoid(tf.add(tf.matmul(X, weights['encoder_h1']), biases['encoder_b1']))
+    layer_1 = tf.nn.sigmoid(tf.add(tf.matmul(x, weights['encoder_h1']), biases['encoder_b1']))
     layer_2 = tf.nn.sigmoid(tf.add(tf.matmul(layer_1, weights['encoder_h2']), biases['encoder_b2']))
     return layer_2
     
@@ -83,11 +83,19 @@ with tf.Session() as sess:
     '''
     自编码器直接进行分类
     '''
-    corect_predict = tf.equal(tf.arg_max(pred , 1), tf.arg_max(Y, 1))
+    corect_predict = tf.equal(tf.arg_max(pred, 1), tf.arg_max(Y, 1))
     accuracy = tf.reduce_mean(tf.cast(corect_predict, tf.float32))
     print('accuracy:', 1-sess.run(accuracy, feed_dict={X:mnist.test.images,
                                                        Y:mnist.test.images}))
+    
+    show_num = 10
+    reconstruction = sess.run(pred, feed_dict={X: mnist.test.images[:show_num]})
+    f, a = plt.subplots(2, 10, figsize=(10, 2))
+    for i in range(show_num):
+        a[0][i].imshow(np.reshape(mnist.test.images[i], (28,28)))
+        a[1][i].imshow(np.reshape(reconstruction[i],(28,28)))
         
+    plt.draw()
 
     
     
